@@ -29,6 +29,8 @@ public class Sql {
 
 		Sector s = new Sector(id_c, nombre, tipo, m2, t_m);
 
+		
+		sc.close();
 	}
 
 }
