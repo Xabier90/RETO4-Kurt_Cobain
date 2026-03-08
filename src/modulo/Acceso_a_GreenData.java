@@ -26,21 +26,36 @@ public class Acceso_a_GreenData {
     private static JButton botonAcceso;
     /** Metodo para cambiar de idioma del Castellano al Euskara. Usamos una variable booleana para,
      * cambiar de idioma ESP == true en este caso los mensajes se verán en castellano y si es false en Euskara.*/
+ // Modificamos el método para que sepa qué texto poner según el contexto
     private static void cambiarIdioma(boolean ESP) {
-    	if (ESP == true) {
-    		LabelUsuario.setText("Usuario: ");
-    		LabelContraseña.setText("Contraseña: ");
-    		infoLabel.setText("Introduce tu usuario y contraseña para tener acceso a GreenData!");
-    		botonAcceso.setText("Enviar Datos");
-    	}
-    	else {
-    		LabelUsuario.setText("Erabiltzailea: ");
-    		LabelContraseña.setText("Pasahitza: ");
-    		infoLabel.setText("Sar itzazu erabiltzailea eta pasahitza GreenDatara sartu al izateko !");
-    		botonAcceso.setText("Datuak Bidali");
-    	}
-    	
-      }
+        if (ESP) {
+            LabelUsuario.setText("Usuario: ");
+            LabelContraseña.setText("Contraseña: ");
+            botonAcceso.setText("Enviar Datos");
+            
+            // CORRECCIÓN: Si ya hubo intentos, mantenemos el mensaje de error en castellano
+            if (intentos == 0) {
+                infoLabel.setText("Introduce tu usuario y contraseña para tener acceso a GreenData!");
+            } else if (intentos >= 3) {
+                infoLabel.setText("Has superado el número máximo de intentos.");
+            } else {
+                infoLabel.setText("Usuario o contraseña incorrectos. Intento " + intentos + " de 3");
+            }
+        } else {
+            LabelUsuario.setText("Erabiltzailea: ");
+            LabelContraseña.setText("Pasahitza: ");
+            botonAcceso.setText("Datuak Bidali");
+            
+            // CORRECCIÓN: Si ya hubo intentos, mantenemos el mensaje de error en euskara
+            if (intentos == 0) {
+                infoLabel.setText("Sar itzazu erabiltzailea eta pasahitza GreenDatara sartu al izateko !");
+            } else if (intentos >= 3) {
+                infoLabel.setText("Dagoeneko saiakera guztiak erabili dituzu.");
+            } else {
+                infoLabel.setText("Erabiltzailea edo pasahitza okerrak. " + intentos + ". saiakera (3tik)");
+            }
+        }
+    }
     
     /**El método para confirmar el acceso a GreenData
      * Consulta la base de datos para verificar si los datos metidos por el usuario
