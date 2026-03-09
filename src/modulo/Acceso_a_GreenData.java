@@ -184,7 +184,11 @@ public class Acceso_a_GreenData {
                 }
                 
                 // Aqui se puede añadir la funcionalidad de enviarnos al programa de monitoreo.
-                 
+                // Abrir la nueva ventana
+                new GreenData(); 
+
+                // Cerrar la ventana de Login
+                frame.dispose();
             } 
             /** Si el usuario o contraseña son incorrectas, la variable intentos se incrementa o suma 1 y
              *  te sale un mensaje de color rojo, diciendo los intentos que te quedan para poder acceder al programa de monitoreo
