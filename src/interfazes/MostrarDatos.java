@@ -20,16 +20,6 @@ public class MostrarDatos extends JFrame {
 	private Connection conn; // conexión guardada como atributo
 	private TablasSql tablasSql; // instancia de tu clase
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				MostrarDatos frame = new MostrarDatos();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
 
 	public MostrarDatos() {
 
@@ -40,7 +30,7 @@ public class MostrarDatos extends JFrame {
 
 		// 2. Configurar ventana
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 750, 550);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,10 +57,41 @@ public class MostrarDatos extends JFrame {
 		scroll.setBounds(10, 66, 600, 400);
 		contentPane.add(scroll);
 
-		// 7. Cuando cambia el combo, actualiza la tabla
+		// 7. Declaracion Iconos
+
+		ImageIcon iconoDelete = new ImageIcon(getClass().getResource("/Recursos/delete.png"));
+
+		ImageIcon iconoRefresco = new ImageIcon(getClass().getResource("/Recursos/refresh.png"));
+		
+		ImageIcon iconoCambio = new ImageIcon(getClass().getResource("/Recursos/update.png"));
+
+		
+		
+		// 8. Declaracion Puntos
+		JButton btnActualizar = new JButton(iconoRefresco);
+		btnActualizar.setBounds(410, 24, 48, 32);
+		contentPane.add(btnActualizar);
+
+		JButton btnCambio = new JButton(iconoCambio);
+		btnCambio.setBounds(469, 24, 48, 32);
+		contentPane.add(btnCambio);
+
+		JButton btnbasura = new JButton(iconoDelete);
+		btnbasura.setBounds(527, 24, 48, 32);
+		contentPane.add(btnbasura);
+		
+		JButton btnImportar = new JButton();
+		btnImportar.setBounds(644, 393, 68, 49);
+		contentPane.add(btnImportar);
+		
+		JLabel lblImportar = new JLabel();
+		lblImportar.setBounds(644, 441, 82, 22);
+		contentPane.add(lblImportar);
+
+		// . Cuando cambia el combo, actualiza la tabla
 		comboTablas.addActionListener(e -> actualizacionDatos());
 
-		// 8. Cerrar conexión al cerrar la ventana
+		// . Cerrar conexión al cerrar la ventana
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent e) {
@@ -78,9 +99,12 @@ public class MostrarDatos extends JFrame {
 			}
 		});
 
-		// 9. Timer de refresco automático
-		tiempo = new Timer(2000, e -> actualizacionDatos());
-		tiempo.start();
+		// . Timer de refresco automático
+		//tiempo = new Timer(2000, e -> actualizacionDatos());
+		//tiempo.start();
+		
+		btnActualizar.addActionListener(e -> actualizacionDatos());
+		
 	}
 
 	private void cargarTablas() {
@@ -101,5 +125,4 @@ public class MostrarDatos extends JFrame {
 
 		}
 	}
-
 }

@@ -1,3 +1,9 @@
+/*
+
+
+Esta parte eran pruebas para probar la conexion al principio, ignorar esto 
+
+
 package workbench;
 
 import java.sql.*;
@@ -40,3 +46,4 @@ public class Conexion {
 	}
 
 }
+**/
