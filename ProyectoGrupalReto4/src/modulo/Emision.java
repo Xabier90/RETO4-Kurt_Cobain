@@ -10,6 +10,9 @@ public class Emision {
     private double co2Kg;
     private String otrosGases;
     private String certificacionVerde;
+    
+    /** @param Desglose de los atributos de la tabla Emisión. Tenemos dos enteros, uno de fecha, otro de double decimal y 
+     * dos de texto */
 
     public Emision(int idEmision, int idSector, LocalDate fecha,
                    double co2Kg, String otrosGases, String certificacionVerde) {
@@ -20,11 +23,14 @@ public class Emision {
         this.otrosGases = otrosGases;
         this.certificacionVerde = certificacionVerde;
     }
-
+/** @return Devuelven valores por tipo a cada uno de los atributos  */
     public int getIdEmision() { return idEmision; }
     public int getIdSector() { return idSector; }
     public LocalDate getFecha() { return fecha; }
     public double getCo2Kg() { return co2Kg; }
     public String getOtrosGases() { return otrosGases; }
     public String getCertificacionVerde() { return certificacionVerde; }
+}
+    public String getCertificacionVerde() { return certificacionVerde; }
+
 }
