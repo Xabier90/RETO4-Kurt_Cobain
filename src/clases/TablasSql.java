@@ -18,8 +18,33 @@ import javax.swing.JComboBox;
 
 import clases.ConexionJoseba;
 
+/**
+ * Clase que proporciona operaciones CRUD y utilidades sobre tablas de una base
+ * de datos MySQL, integrando los resultados con componentes Swing.
+ * <p>
+ * Incluye métodos para seleccionar, insertar, editar, borrar y exportar datos,
+ * así como funcionalidades de búsqueda y filtrado sobre {@link JTable}.
+ * </p>
+ *
+ * @author Filip
+ * @version 1.0
+ */
 public class TablasSql {
 
+	/**
+	 * Carga todos los registros de la tabla indicada y los devuelve como un
+	 * {@link DefaultTableModel} no editable, listo para asignarse a un
+	 * {@link JTable}.
+	 * <p>
+	 * Las columnas del modelo se generan dinámicamente a partir de los metadatos
+	 * del {@link ResultSet}.
+	 * </p>
+	 *
+	 * @param tabla nombre de la tabla SQL que se desea consultar.
+	 * @param conn  conexión activa con la base de datos.
+	 * @return un {@link DefaultTableModel} con los datos de la tabla, o un modelo
+	 *         vacío si ocurre algún error.
+	 */
 	public DefaultTableModel SeleccionTabla(String tabla, Connection conn) {
 
 		DefaultTableModel modelo = new DefaultTableModel() {
@@ -57,6 +82,13 @@ public class TablasSql {
 
 	}
 
+	/**
+	 * Obtiene los nombres de todas las tablas disponibles en la base de datos.
+	 *
+	 * @param conn conexión activa con la base de datos.
+	 * @return array de {@link String} con los nombres de las tablas encontradas.
+	 * @throws SQLException si ocurre un error al acceder a los metadatos de la BD.
+	 */
 	public String[] nombreTablas(Connection conn) throws SQLException {
 		List<String> tablas = new ArrayList<>();
 
@@ -70,6 +102,17 @@ public class TablasSql {
 		return tablas.toArray(new String[0]);
 	}
 
+	/**
+	 * Exporta el contenido actual de un {@link JTable} a un archivo CSV.
+	 * <p>
+	 * El archivo se guarda en la carpeta {@code CSV_Guardados} (creada
+	 * automáticamente si no existe), con el nombre de la tabla como nombre de
+	 * archivo. Muestra un diálogo informando la ruta final o el error.
+	 * </p>
+	 *
+	 * @param tabla       el componente {@link JTable} cuyo contenido se exportará.
+	 * @param nombreTabla nombre que se usará para el archivo CSV generado.
+	 */
 	public void exportarCSV(JTable tabla, String nombreTabla) {
 
 		java.io.File carpeta = new java.io.File("CSV_Guardados");
@@ -109,7 +152,21 @@ public class TablasSql {
 		}
 	}
 
-	// BORRAR - elimina la fila seleccionada en la tabla
+	/**
+	 * Elimina de la base de datos la fila actualmente seleccionada en el
+	 * {@link JTable}.
+	 * <p>
+	 * Usa el valor de la primera columna como clave primaria para construir el
+	 * {@code DELETE}. Solicita confirmación al usuario antes de proceder. Si no hay
+	 * fila seleccionada, muestra un aviso. Actualiza el modelo visual eliminando la
+	 * fila si la operación es exitosa.
+	 * </p>
+	 *
+	 * @param tabla       el componente {@link JTable} con la fila a eliminar.
+	 * @param conn        conexión activa con la base de datos.
+	 * @param nombreTabla nombre de la tabla SQL sobre la que se ejecutará el
+	 *                    {@code DELETE}.
+	 */
 	public void borrarFila(JTable tabla, Connection conn, String nombreTabla) {
 		int filaSeleccionada = tabla.getSelectedRow();
 
@@ -142,7 +199,21 @@ public class TablasSql {
 		}
 	}
 
-	// EDITAR - edita la celda seleccionada
+	/**
+	 * Permite editar todos los campos de la fila seleccionada en el {@link JTable}
+	 * mediante diálogos de entrada, y actualiza el registro correspondiente en la
+	 * BD.
+	 * <p>
+	 * La primera columna se trata como clave primaria y no se modifica. Si el
+	 * usuario cancela cualquier campo, la operación se cancela por completo. Al
+	 * terminar, actualiza el modelo visual con los nuevos valores.
+	 * </p>
+	 *
+	 * @param tabla       el componente {@link JTable} con la fila a editar.
+	 * @param conn        conexión activa con la base de datos.
+	 * @param nombreTabla nombre de la tabla SQL sobre la que se ejecutará el
+	 *                    {@code UPDATE}.
+	 */
 	public void editarFila(JTable tabla, Connection conn, String nombreTabla) {
 		int filaSeleccionada = tabla.getSelectedRow();
 
@@ -200,7 +271,22 @@ public class TablasSql {
 		}
 	}
 
-	// INSERTAR - añade una fila nueva pidiendo cada campo
+	/**
+	 * Inserta una nueva fila en la tabla SQL solicitando al usuario cada valor
+	 * mediante diálogos de entrada.
+	 * <p>
+	 * La primera columna (clave primaria) se omite en la entrada, ya que se asume
+	 * que la BD la genera automáticamente. Tras el {@code INSERT}, recupera el ID
+	 * generado y añade la fila completa al modelo visual. Si el usuario cancela
+	 * cualquier campo, la operación se cancela.
+	 * </p>
+	 *
+	 * @param tabla       el componente {@link JTable} al que se añadirá la nueva
+	 *                    fila.
+	 * @param conn        conexión activa con la base de datos.
+	 * @param nombreTabla nombre de la tabla SQL sobre la que se ejecutará el
+	 *                    {@code INSERT}.
+	 */
 	public void insertarFila(JTable tabla, Connection conn, String nombreTabla) {
 		DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 		int numCols = modelo.getColumnCount();
@@ -248,6 +334,23 @@ public class TablasSql {
 		}
 	}
 
+	/**
+	 * Filtra las filas visibles del {@link JTable} según un texto de búsqueda
+	 * aplicado a una columna específica.
+	 * <p>
+	 * Crea un nuevo {@link DefaultTableModel} con solo las filas que contienen el
+	 * texto buscado (sin distinción de mayúsculas/minúsculas) y lo asigna al
+	 * {@link JTable}. El modelo original no se modifica, lo que permite restaurarlo
+	 * posteriormente.
+	 * </p>
+	 *
+	 * @param tabla         el componente {@link JTable} en el que se mostrará el
+	 *                      filtro.
+	 * @param modelOriginal el modelo completo sin filtrar, usado como fuente de
+	 *                      datos.
+	 * @param textoBusqueda texto a buscar dentro de la columna indicada.
+	 * @param columna       índice de la columna sobre la que se aplica el filtro.
+	 */
 	public void buscarEnTabla(JTable tabla, DefaultTableModel modelOriginal, String textoBusqueda, int columna) {
 		int numFilas = modelOriginal.getRowCount();
 		int numCols = modelOriginal.getColumnCount();
@@ -277,6 +380,16 @@ public class TablasSql {
 		tabla.setModel(modeloFiltrado);
 	}
 
+	/**
+	 * Carga los nombres de todas las columnas del {@link JTable} en un
+	 * {@link JComboBox}, reemplazando cualquier contenido previo.
+	 * <p>
+	 * Útil para actualizar el selector de columnas tras cambiar la tabla mostrada.
+	 * </p>
+	 *
+	 * @param tabla el {@link JTable} del que se leerán los nombres de columna.
+	 * @param combo el {@link JComboBox} que se actualizará con dichos nombres.
+	 */
 	public void cargarColumnasEnCombo(JTable tabla, JComboBox<String> combo) {
 		combo.removeAllItems();
 		for (int i = 0; i < tabla.getColumnCount(); i++) {
