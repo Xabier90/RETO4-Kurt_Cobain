@@ -8,6 +8,8 @@ import java.awt.Color;
  * Clase que gestiona la interfaz de acceso (Login) al sistema GreenData.
  * Conecta con una base de datos MySQL para validar el acceso según los usuarios y contraseñas que tenemos 
  * en la base de datos.
+ * @author Xabier Iglesias
+ * @version 2.0
  */
 
 public class Acceso_a_GreenData {
@@ -185,7 +187,7 @@ public class Acceso_a_GreenData {
                 
                 // Aqui se puede añadir la funcionalidad de enviarnos al programa de monitoreo.
                 // Abrir la nueva ventana
-                new GreenData(); 
+              //  new GreenData(); 
 
                 // Cerrar la ventana de Login
                 frame.dispose();

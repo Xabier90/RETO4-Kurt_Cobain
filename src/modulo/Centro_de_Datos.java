@@ -56,43 +56,43 @@ public class Centro_de_Datos {
 	public String getUbicacion() {
 		return ubicacion;
 	}
-	/** @param ubicacion Nueva direccion del centro*/
+	/** @param ubicacion Nueva direccion del centro.*/
 	public void setUbicacion(String ubicacion) {
 		this.ubicacion = ubicacion;
 	}
 
-	/** @return El pais donde se encuentra el centro de datos*/
+	/** @return El pais donde se encuentra el centro de datos.*/
 	public String getPais() {
 		return pais;
 	}
-
+	/** @param pais El pais en el que se encuentra el centro de datos.*/
 	public void setPais(String pais) {
 		this.pais = pais;
 	}
 
-	
+	/** @return La fecha en la que se inauguró el centro de datos.*/
 	public LocalDate getFecha_apertura() {
 		return fecha_apertura;
 	}
-
+	/** @param fecha_apertura La fecha en la que empezó a funcionar el centro de datos. */
 	public void setFecha_apertura(LocalDate fecha_apertura) {
 		this.fecha_apertura = fecha_apertura;
 	}
 
-	
+	/** @return El tamaño de cada centro de datos.*/
 	public int getSuperficie_m2() {
 		return superficie_m2;
 	}
-
+	/** @param superficie_m2 Es el tamaño en m2 de cada centro de datos*/
 	public void setSuperficie_m2(int superficie_m2) {
 		this.superficie_m2 = superficie_m2;
 	}
 
-	
+	/** @return La cantidad de servidores en cada centro de datos.*/
 	public int getNum_servidores() {
 		return num_servidores;
 	}
-
+	/** @param num_servidores Nos da la cifra de la cantidad de servidores que tenemos en cada centro de datos.*/
 	public void setNum_servidores(int num_servidores) {
 		this.num_servidores = num_servidores;
 	}
