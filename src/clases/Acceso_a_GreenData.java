@@ -1,9 +1,8 @@
-package modulo;
+package clases;
 
 import javax.swing.*;
 
 import interfazes.MostrarDatos;
-import workbench.ConexionJoseba;
 
 import java.sql.*;
 import java.awt.Color;
@@ -116,7 +115,7 @@ public class Acceso_a_GreenData {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void iniciar() {
 
 		// Configuración de la ventana principal
 		JFrame frame = new JFrame("Acceso a GreenData");

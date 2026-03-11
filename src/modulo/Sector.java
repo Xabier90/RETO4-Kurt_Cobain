@@ -1,4 +1,4 @@
-package workbench;
+package modulo;
 
 public class Sector {
 

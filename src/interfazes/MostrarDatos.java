@@ -1,13 +1,18 @@
 package interfazes;
 
-import workbench.ConexionJoseba;
-import workbench.TablasSql;
+import clases.TablasSql;
 
 import java.sql.*;
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import clases.ConexionJoseba;
+import clases.TablasSql;
+
 import java.awt.Color;
+import java.awt.Font;
 
 public class MostrarDatos extends JFrame {
 
@@ -16,10 +21,15 @@ public class MostrarDatos extends JFrame {
 	private JTable Tabla_base;
 	private JComboBox<String> comboTablas;
 	private Timer tiempo;
+	private JComboBox<String> ColumnaBuscar;
+	private DefaultTableModel modelOriginal;
+
+	private String[] imagenes = { "/Recursos/delete.png", "/Recursos/refresh.png", "/Recursos/update.png",
+			"/Recursos/export.png", "/Recursos/lupa.png" };
 
 	private Connection conn; // conexión guardada como atributo
 	private TablasSql tablasSql; // instancia de tu clase
-
+	private JTextField textBusqueda;
 
 	public MostrarDatos() {
 
@@ -45,10 +55,12 @@ public class MostrarDatos extends JFrame {
 		comboTablas = new JComboBox<>();
 		comboTablas.setBounds(250, 24, 150, 32);
 		contentPane.add(comboTablas);
-		cargarTablas(); // rellena el combo desde la BD
+		
 
 		// 5. Tabla
 		Tabla_base = new JTable();
+		Tabla_base.setRowSelectionAllowed(true);
+		Tabla_base.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		Tabla_base.setBounds(10, 66, 600, 150);
 		contentPane.add(Tabla_base);
 
@@ -59,14 +71,16 @@ public class MostrarDatos extends JFrame {
 
 		// 7. Declaracion Iconos
 
-		ImageIcon iconoDelete = new ImageIcon(getClass().getResource("/Recursos/delete.png"));
+		ImageIcon iconoDelete = new ImageIcon(getClass().getResource(imagenes[0]));
 
-		ImageIcon iconoRefresco = new ImageIcon(getClass().getResource("/Recursos/refresh.png"));
-		
-		ImageIcon iconoCambio = new ImageIcon(getClass().getResource("/Recursos/update.png"));
+		ImageIcon iconoRefresco = new ImageIcon(getClass().getResource(imagenes[1]));
 
-		
-		
+		ImageIcon iconoCambio = new ImageIcon(getClass().getResource(imagenes[2]));
+
+		ImageIcon iconoExport = new ImageIcon(getClass().getResource(imagenes[3]));
+
+		ImageIcon iconoBusqueda = new ImageIcon(getClass().getResource(imagenes[4]));
+
 		// 8. Declaracion Puntos
 		JButton btnActualizar = new JButton(iconoRefresco);
 		btnActualizar.setBounds(410, 24, 48, 32);
@@ -79,14 +93,45 @@ public class MostrarDatos extends JFrame {
 		JButton btnbasura = new JButton(iconoDelete);
 		btnbasura.setBounds(527, 24, 48, 32);
 		contentPane.add(btnbasura);
-		
-		JButton btnImportar = new JButton();
+
+		JButton btnImportar = new JButton(iconoExport);
 		btnImportar.setBounds(644, 393, 68, 49);
 		contentPane.add(btnImportar);
-		
-		JLabel lblImportar = new JLabel();
-		lblImportar.setBounds(644, 441, 82, 22);
-		contentPane.add(lblImportar);
+
+		JLabel lblExportar = new JLabel("Exportar a CSV");
+		lblExportar.setBounds(630, 443, 96, 49);
+		contentPane.add(lblExportar);
+
+		JButton btnInsertar = new JButton("+");
+		btnInsertar.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnInsertar.setBounds(583, 24, 48, 32);
+		contentPane.add(btnInsertar);
+
+		JLabel lblFiltro = new JLabel("Filto");
+		lblFiltro.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblFiltro.setBounds(620, 68, 84, 23);
+		contentPane.add(lblFiltro);
+
+		JLabel lblSeleccion = new JLabel("Selecciona la columna");
+		lblSeleccion.setBounds(620, 101, 106, 12);
+		contentPane.add(lblSeleccion);
+
+		ColumnaBuscar = new JComboBox();
+		ColumnaBuscar.setBounds(620, 130, 106, 20);
+		contentPane.add(ColumnaBuscar);
+
+		JLabel lblBuscar = new JLabel("Introduce busqueda");
+		lblBuscar.setBounds(620, 176, 106, 12);
+		contentPane.add(lblBuscar);
+
+		textBusqueda = new JTextField();
+		textBusqueda.setBounds(620, 198, 96, 18);
+		contentPane.add(textBusqueda);
+		textBusqueda.setColumns(10);
+
+		JButton btnBuscar = new JButton(iconoBusqueda);
+		btnBuscar.setBounds(620, 247, 48, 32);
+		contentPane.add(btnBuscar);
 
 		// . Cuando cambia el combo, actualiza la tabla
 		comboTablas.addActionListener(e -> actualizacionDatos());
@@ -99,12 +144,50 @@ public class MostrarDatos extends JFrame {
 			}
 		});
 
-		// . Timer de refresco automático
-		//tiempo = new Timer(2000, e -> actualizacionDatos());
-		//tiempo.start();
+		// . Timer de refresco automático (Primer concepto)
+		// tiempo = new Timer(2000, e -> actualizacionDatos());
+		// tiempo.start();
+
+		// Metodo para actulizar el combobox para que aparezcan las columnas de la nueva
+		// tabla
+
+		/*comboTablas.addActionListener(e -> {
+			actualizacionDatos();
+			tablasSql.cargarColumnasEnCombo(Tabla_base, ColumnaBuscar);
+		});*/
 		
+		comboTablas.addActionListener(e -> actualizacionDatos());
+
+		// Metodos de los botones
+
 		btnActualizar.addActionListener(e -> actualizacionDatos());
+
+		btnImportar.addActionListener(e -> {
+			tablasSql.exportarCSV(Tabla_base, (String) comboTablas.getSelectedItem());
+		});
+
+		btnbasura
+				.addActionListener(e -> tablasSql.borrarFila(Tabla_base, conn, (String) comboTablas.getSelectedItem()));
+
+		btnCambio
+				.addActionListener(e -> tablasSql.editarFila(Tabla_base, conn, (String) comboTablas.getSelectedItem()));
+
+		btnInsertar.addActionListener(
+				e -> tablasSql.insertarFila(Tabla_base, conn, (String) comboTablas.getSelectedItem()));
+
+		btnBuscar.addActionListener(e -> {
+		    String texto = textBusqueda.getText();
+		    int columnaSeleccionada = ColumnaBuscar.getSelectedIndex();
+		    
+		    if (texto.isEmpty()) {
+		        Tabla_base.setModel(modelOriginal); // restaura todo
+		        return;
+		    }
+		    
+		    tablasSql.buscarEnTabla(Tabla_base, modelOriginal, texto, columnaSeleccionada);
+		});
 		
+		SwingUtilities.invokeLater(() -> cargarTablas());
 	}
 
 	private void cargarTablas() {
@@ -119,10 +202,11 @@ public class MostrarDatos extends JFrame {
 	}
 
 	public void actualizacionDatos() {
-		String tablaSeleccionada = (String) comboTablas.getSelectedItem();
-		if (tablaSeleccionada != null) {
-			Tabla_base.setModel(tablasSql.SeleccionTabla(tablaSeleccionada, conn));
-
-		}
+	    String tablaSeleccionada = (String) comboTablas.getSelectedItem();
+	    if (tablaSeleccionada != null) {
+	        modelOriginal = tablasSql.SeleccionTabla(tablaSeleccionada, conn); // guardas el original
+	        Tabla_base.setModel(modelOriginal);
+	        tablasSql.cargarColumnasEnCombo(Tabla_base, ColumnaBuscar);
+	    }
 	}
 }
