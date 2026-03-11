@@ -11,6 +11,8 @@ public class Formacion {
     private LocalDate fecha;
     private String certificacion;
     private String proveedor;
+ /** @param Desglose de los atributos de la tabla Formación. Tenemos tres enteros, uno de fecha y 
+     * dos de texto */
 
     public Formacion(int idFormacion, int idCentro, String curso,
                      int horas, LocalDate fecha,
@@ -23,7 +25,7 @@ public class Formacion {
         this.certificacion = certificacion;
         this.proveedor = proveedor;
     }
-
+/** @return Devuelven valores por tipo a cada uno de los atributos  */
     public int getIdFormacion() { return idFormacion; }
     public int getIdCentro() { return idCentro; }
     public String getCurso() { return curso; }
@@ -31,4 +33,5 @@ public class Formacion {
     public LocalDate getFecha() { return fecha; }
     public String getCertificacion() { return certificacion; }
     public String getProveedor() { return proveedor; }
+
 }
