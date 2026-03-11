@@ -16,7 +16,6 @@ public class ConexionJoseba {
 
 			Connection conn = DriverManager.getConnection(url, user, pass);
 
-			System.out.println("Acceso concedido");
 			return conn;
 
 		} catch (Exception e) {
