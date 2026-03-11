@@ -72,7 +72,7 @@ public class TablasSql {
 
 	public void exportarCSV(JTable tabla, String nombreTabla) {
 
-		java.io.File carpeta = new java.io.File("CSV_generados");
+		java.io.File carpeta = new java.io.File("CSV_Guardados");
 
 		if (!carpeta.exists()) {
 			carpeta.mkdirs();
