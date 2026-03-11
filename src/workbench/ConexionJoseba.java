@@ -4,9 +4,41 @@ import java.sql.*;
 
 public class ConexionJoseba {
 
+	private String url = "jdbc:mysql://nas.latorreg.es:3306/futuretech_db";
+	private String user = "filip";
+	private String pass = "1234";
+
+	public Connection ActivarConexion() {
+
+		try {
+
+			// Class.forName("com.mysql.cj.jdbc.Driver");
+
+			Connection conn = DriverManager.getConnection(url, user, pass);
+
+			System.out.println("Acceso concedido");
+			return conn;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+
+	}
+
+	public void CerrarConexion(Connection conn) {
+
+		try {
+			conn.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
 	public void MostrarUsuarios() {
 
-		String url = "jdbc:mysql://nas.latorreg.es:3306/futuretech_db";
 		try {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -30,11 +62,5 @@ public class ConexionJoseba {
 		}
 
 	}
-	
-	public void InsertarSector(int id_sec, int id_centro, String nombre, String tipo, int m2, float temp_media) {
-		
-		
-		
-	}
-	
+
 }
