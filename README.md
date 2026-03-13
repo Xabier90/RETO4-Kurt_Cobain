@@ -8,3 +8,7 @@ También los objetivos, compromisos o responsabilidades, plazos (Fecha de contra
 
 <img width="1000" height="1105" alt="image" src="https://github.com/user-attachments/assets/fc24b9d1-eebf-42d0-ae43-c2f555048515" />
 
+Nuestro programa, en términos generales, abre una interfaz de acceso (en diferentes idiomas) a nuestra SGBD con la que podemos interactuar con la base de datos administrada por nosotros en phpMyAdmin y teníamos la libertad de actualizar, editar, borrar, permutar... los diferentes registros de valores de las filas y columnas
+de las variopintas tablas importadas desde nuestra base de datos (GreenData) que podemos alterar en tiempo real y exportar los resultados pertinentes en formato CSV.
+
+La documentación del proceso y desarrollo del reto 
