@@ -11,6 +11,6 @@ También los objetivos, compromisos o responsabilidades, plazos (Fecha de contra
 Nuestro programa, en términos generales, abre una interfaz de acceso (en diferentes idiomas) a nuestra SGBD con la que podemos interactuar con la base de datos administrada por nosotros en phpMyAdmin y teníamos la libertad de actualizar, editar, borrar, permutar... los diferentes registros de valores de las filas y columnas
 de las variopintas tablas importadas desde nuestra base de datos (GreenData) que podemos alterar en tiempo real y exportar los resultados pertinentes en formato CSV.
 
-<img width="400" height="320" alt="image" src="https://github.com/user-attachments/assets/32c70e51-1a8a-4c67-8ffb-1e5feea64cc0" />
+<img width="400" height="320" alt="image" text-align:center src="https://github.com/user-attachments/assets/32c70e51-1a8a-4c67-8ffb-1e5feea64cc0" />
 
 La documentación del proceso y desarrollo del reto 
