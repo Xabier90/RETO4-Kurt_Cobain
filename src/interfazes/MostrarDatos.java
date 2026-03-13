@@ -195,6 +195,8 @@ public class MostrarDatos extends JFrame {
 		// Listeners de los botones de acción
 		btnActualizar.addActionListener(e -> actualizacionDatos());
 
+		// Esta parte del codigo no es generada puramente con IA, pero si me he ayudado con ella para poder entender mejor que es lo que hay que hacer y como hacerlo
+		
 		btnImportar.addActionListener(e -> {
 			tablasSql.exportarCSV(Tabla_base, (String) comboTablas.getSelectedItem());
 		});
@@ -208,6 +210,7 @@ public class MostrarDatos extends JFrame {
 		btnInsertar.addActionListener(
 				e -> tablasSql.insertarFila(Tabla_base, conn, (String) comboTablas.getSelectedItem()));
 
+		// Aqui he tenido problemas con el filtro, se aplicaba todo el filtro a la tabla y el nuevo filtro filtaba solo en la busqueda del anterior filtro
 		btnBuscar.addActionListener(e -> {
 			String texto = textBusqueda.getText();
 			int columnaSeleccionada = ColumnaBuscar.getSelectedIndex();
