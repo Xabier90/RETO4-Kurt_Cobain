@@ -14,13 +14,10 @@ de las variopintas tablas importadas desde nuestra base de datos (GreenData) que
 <div align="center" padding-top: 20px>
 <img width="400" height="320" alt="image" src="https://github.com/user-attachments/assets/32c70e51-1a8a-4c67-8ffb-1e5feea64cc0" />
 </div>
+
+
 La documentación del proceso y desarrollo del reto
-
-
-
-
-
 <br>
-<div align="center" padding-top: 20px>
-<img width="703" height="417" alt="image" src="https://github.com/user-attachments/assets/0c1ca1df-3c2b-45b4-9a41-e4ea96281ebe" />
+<div align="center" >
+<img width="703" height="417" alt="image" padding-top:20px src="https://github.com/user-attachments/assets/0c1ca1df-3c2b-45b4-9a41-e4ea96281ebe" />
 </div>
