@@ -21,3 +21,7 @@ La documentación del proceso y desarrollo del reto
 <div align="center" >
 <img width="703" height="417" alt="image" padding-top:20px src="https://github.com/user-attachments/assets/0c1ca1df-3c2b-45b4-9a41-e4ea96281ebe" />
 </div>
+
+Esta es la documentación pertinente para la evidencia del proceso y desarrollo de la propuesta para el reto que nos atañe:
+[
+https://docs.google.com/document/d/1Rc8Z9bGfnePAe80wQdUSJGdm3f_Kivc-yoAvNKF0WaU/edit?tab=t.0#heading=h.bfs3vgsm7s1j](url)
