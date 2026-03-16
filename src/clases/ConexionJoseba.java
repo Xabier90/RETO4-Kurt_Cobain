@@ -15,7 +15,7 @@ import java.sql.*;
 public class ConexionJoseba {
 
 	/** URL de conexión JDBC apuntando al servidor MySQL remoto. */
-	private String url = "jdbc:mysql://nas.latorreg.es:3306/futuretech_db";
+	private String url = "jdbc:mysql://localhost:3306/futuretech_db";
 
 	/** Nombre de usuario para autenticarse en la base de datos. */
 	private String user = "filip";
